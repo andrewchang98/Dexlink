@@ -1,4 +1,4 @@
-import print_current_bg
+import printCurrentBG
 
 #BG_HOURS = input('Enter desired timeframe in hours: ')
 #BG_MAX_COUNT = input('Enter maximum number of data points desired: ')
