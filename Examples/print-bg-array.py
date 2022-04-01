@@ -1,4 +1,4 @@
-print('--- PRINT CURRENT BLOOD GLUCOSE ---')
+print('--- PRINT BLOOD GLUCOSE ARRAY ---')
 print('Importing APIs...')
 from pydexcom import Dexcom
 from getpass import getpass
@@ -22,18 +22,21 @@ except:
     exit()
 
 
-print('Getting current BG...')
+print('Retrieving current BG...')
 bg = dexcom.get_current_glucose_reading()
 if(bg == None):
-    print('!!!WARNING: ATTEMPT FAILED. GETTING LAST BG WITHIN 24 HOURS!!!')
+    print('!!!WARNING!!! ATTEMPT FAILED. RETRIEVING LAST BG WITHIN 24 HOURS.')
     bg = dexcom.get_latest_glucose_reading()
     if(bg == None):
         print('No glucose readings available within the last 24 hours!')
         print('Please check if Dexcom and Dexlink are working correctly.')
-        print('Exiting.')
-        exit()
-print('Success.')
-
+else:
+    print('Success.')
 
 timestamp = bg.time
 print('|', bg.value, 'mg/dL', bg.trend_arrow, '|', timestamp.strftime('%c'))
+
+
+print('Retrieving BG data over the last ')
+bg = dexcom.get_glucose_readings(1440, 288)
+return(bg) 
