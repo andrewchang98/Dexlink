@@ -1,11 +1,15 @@
+DEXCOM_USERNAME = input('Username:')
+DEXCOM_PASSWORD = input('Password:')
+
+
 print('Importing API...')
 from pydexcom import Dexcom
 
 
-print('Logging in...')
+print('Logging in as {}...'.format(DEXCOM_USERNAME))
 try:
-    dexcom = Dexcom('staciepeterson', 'Finn2019312!')
-    print('Logged in as "staciepeterson".')
+    dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
+    print('Logged in as "{}".'.format(DEXCOM_USERNAME))
 except AccountError:
     print('Login failed. Please verify password and check internet connection.')
     print('Exiting.')
