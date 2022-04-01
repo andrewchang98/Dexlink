@@ -45,4 +45,4 @@ finally:
     except:
         print('Login failed. Please check username and password.')
     else:
-        print('Logged in as "{}"...'.format(DEXCOM_USERNAME))
+        print('Logged in as {}.'.format(DEXCOM_USERNAME))
