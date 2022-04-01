@@ -37,6 +37,10 @@ timestamp = bg.time
 print('|', bg.value, 'mg/dL', bg.trend_arrow, '|', timestamp.strftime('%c'))
 
 
-print('Retrieving BG data over the last ')
-bg = dexcom.get_glucose_readings(1440, 288)
-return(bg) 
+BG_HOURS = input('Enter desired timeframe in hours: ')
+BG_MAX_COUNT = input('Enter maximum number of data points desired: ')
+
+print('Retrieving {} BG datapoints over the last {} hours.'.format(hours, max_count))
+BG_MINUTES = BG_HOURS * 60
+bg = dexcom.get_glucose_readings(BG_MINUTES, BG_MAX_COUNT)
+print(len(bg))
