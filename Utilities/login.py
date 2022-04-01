@@ -52,9 +52,10 @@ except ImportError:
 
 #Login to Dexcom
 try:
-    print('Connecting to Dexcom servers...')
+    print('Connecting to Dexcom servers... \n')
     dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
 except:
+    print()
     print('Login failed. Please check username and password.')
 else:
     print('Logged in as {}'.format(DEXCOM_USERNAME))
