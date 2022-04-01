@@ -39,4 +39,4 @@ except:
     print('Failed.')
 
 timestamp = bg.time
-print('|', bg.value, 'mg/dL', bg.trend_arrow, '|', timestamp.strftime('%c'))
+print('|', bg.value, 'mg/dL', bg.trend_description, '|', timestamp.strftime('%c'))
