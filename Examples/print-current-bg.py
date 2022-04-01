@@ -1,4 +1,4 @@
-print('### PRINT CURRENT BLOOD GLUCOSE ###')
+print('--- PRINT CURRENT BLOOD GLUCOSE ---')
 print('Importing APIs...')
 from pydexcom import Dexcom
 from getpass import getpass
@@ -8,11 +8,11 @@ DEXCOM_USERNAME = input('Username: ')
 DEXCOM_PASSWORD = getpass('Password: ')
 
 
-print('Logging in as {}...'.format(DEXCOM_USERNAME))
+print('Logging in as "{}"...'.format(DEXCOM_USERNAME))
 try:
     dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
-    print('Logged in as "{}".'.format(DEXCOM_USERNAME))
-except FaultException:
+    print('Success.')
+except:
     print('Login failed. Please check username and password.')
     print('Exiting.')
     exit()
