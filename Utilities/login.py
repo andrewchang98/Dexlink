@@ -49,12 +49,12 @@ except ImportError:
         print()
         print('Canceled by user. Exiting.')
         sys.exit(0)
-finally:
-    #Login to Dexcom
-    try:
-        print('Connecting to Dexcom servers...')
-        dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
-    except:
-        print('Login failed. Please check username and password.')
-    else:
-        print('Logged in as {}'.format(DEXCOM_USERNAME))
+
+#Login to Dexcom
+try:
+    print('Connecting to Dexcom servers...')
+    dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
+except:
+    print('Login failed. Please check username and password.')
+else:
+    print('Logged in as {}'.format(DEXCOM_USERNAME))
