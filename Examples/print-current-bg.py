@@ -8,10 +8,10 @@ DEXCOM_USERNAME = input('Username: ')
 DEXCOM_PASSWORD = getpass('Password: ')
 
 
-print('Logging in as "{}"...'.format(DEXCOM_USERNAME))
+print('Connecting to Dexcom servers...')
 try:
     dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
-    print('Success.')
+    print('Logged in as "{}"...'.format(DEXCOM_USERNAME)')
 except:
     print('Login failed. Please check username and password.')
     print('Exiting.')
