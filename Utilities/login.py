@@ -17,7 +17,8 @@ from getpass import getpass
 def auth(pair):
     global DEXCOM_USERNAME
     global DEXCOM_PASSWORD
-    keystroke = input('Login as {}?'.format(pair[0]), '(Y/n): ')
+    print('Login as {}?'.format(pair[0]), end = ' ')
+    keystroke = input('(Y/n): ')
     if keystroke == 'y' or keystroke == 'Y':
         DEXCOM_USERNAME = pair[0]
         DEXCOM_PASSWORD = pair[1]
