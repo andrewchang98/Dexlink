@@ -4,14 +4,18 @@ from pydexcom import Dexcom
 from getpass import getpass
 
 
-DEXCOM_USERNAME = input('Username: ')
-DEXCOM_PASSWORD = getpass('Password: ')
+DEXCOM_USERNAME = None
+DEXCOM_PASSWORD = None
+
+if(DEXCOM_USERNAME is None or DEXCOM_PASSWORD is None):
+    DEXCOM_USERNAME = input('Username: ')
+    DEXCOM_PASSWORD = getpass('Password: ')
 
 
 print('Connecting to Dexcom servers...')
 try:
     dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
-    print('Logged in as "{}"...'.format(DEXCOM_USERNAME)')
+    print('Logged in as "{}"...'.format(DEXCOM_USERNAME))
 except:
     print('Login failed. Please check username and password.')
     print('Exiting.')
@@ -32,4 +36,4 @@ print('Success.')
 
 
 timestamp = bg.time
-print(bg.value, 'mg/dL', bg.trend_arrow, timestamp.strftime('%c'))
+print('|', bg.value, 'mg/dL', bg.trend_arrow, '|', timestamp.strftime('%c'))
