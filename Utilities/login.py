@@ -15,18 +15,22 @@ except:
 #Login option if account info is avaiable
 from getpass import getpass
 def auth(pair):
-    global DEXCOM_USERNAME
-    global DEXCOM_PASSWORD
-    print('Login as {}?'.format(pair[0]), end = ' ')
-    keystroke = input('(Y/n): ')
-    if keystroke == 'y' or keystroke == 'Y':
-        DEXCOM_USERNAME = pair[0]
-        DEXCOM_PASSWORD = pair[1]
-    elif keystroke == 'n' or keystroke == 'N':
-        DEXCOM_USERNAME = input('Username: ')
-        DEXCOM_PASSWORD = getpass('Password: ')
-    else:
-        auth(pair)
+    try:
+        global DEXCOM_USERNAME
+        global DEXCOM_PASSWORD
+        print('Login as {}?'.format(pair[0]), end = ' ')
+        keystroke = input('(Y/n): ')
+        if keystroke == 'y' or keystroke == 'Y':
+            DEXCOM_USERNAME = pair[0]
+            DEXCOM_PASSWORD = pair[1]
+        elif keystroke == 'n' or keystroke == 'N':
+            DEXCOM_USERNAME = input('Username: ')
+            DEXCOM_PASSWORD = getpass('Password: ')
+        else:
+            auth(pair)
+    except KeyboardInterrupt:
+        print('Canceled by user. Exiting.')
+        exit()
 
 #Load account info
 try:
@@ -45,4 +49,4 @@ finally:
     except:
         print('Login failed. Please check username and password.')
     else:
-        print('Logged in as {}.'.format(DEXCOM_USERNAME))
+        print('Logged in as {}'.format(DEXCOM_USERNAME))
