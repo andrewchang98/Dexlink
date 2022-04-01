@@ -2,6 +2,9 @@
 Logs into Dexcom
 
 """
+import sys
+from getpass import getpass
+
 
 #Import API
 try:
@@ -13,7 +16,6 @@ except:
     exit()
 
 #Login option if account info is avaiable
-from getpass import getpass
 def auth(pair):
     try:
         global DEXCOM_USERNAME
@@ -29,18 +31,24 @@ def auth(pair):
         else:
             auth(pair)
     except KeyboardInterrupt:
+        print()
         print('Canceled by user. Exiting.')
-        exit()
+        sys.exit(0)
 
 #Load account info
 try:
     print('Loading account info...')
     from accounts import passwords
     auth(passwords.account)
-except:
-    print('No account info in ~/.local/lib/python3.9/site-packages/')
-    DEXCOM_USERNAME = input('Username: ')
-    DEXCOM_PASSWORD = getpass('Password: ')
+except ImportError:
+    try:
+        print('No account info in ~/.local/lib/python3.9/site-packages/')
+        DEXCOM_USERNAME = input('Username: ')
+        DEXCOM_PASSWORD = getpass('Password: ')
+    except KeyboardInterrupt:
+        print()
+        print('Canceled by user. Exiting.')
+        sys.exit(0)
 finally:
     #Login to Dexcom
     try:
