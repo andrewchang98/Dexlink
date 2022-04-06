@@ -4,7 +4,7 @@ from pydexcom import Dexcom
 
 # PROMPT USER INFO
 def prompt():
-    print('Log in to Dexcom:')
+    print('Log into Dexcom:')
     try:
         username = input('Username: ')
         password = getpass('Password: ')
@@ -21,7 +21,7 @@ def account():
     try:
         from accounts import passwords
     except ImportError:
-        print('No account info in ~/.local/lib/python3.9/site-packages/')
+        print('No account info found.')
         DEXCOM_USERNAME, DEXCOM_PASSWORD = prompt()
     else:
         # ASK TO LOGIN AS USER
@@ -48,5 +48,5 @@ def account():
         print('Exiting now.')
         sys.exit(0)
     else:
-        print('\n', 'Logged in as {}'.format(DEXCOM_USERNAME), '\n', sep='')
+        print('Logged in as {}'.format(DEXCOM_USERNAME), '\n', sep='')
         return dexcom
