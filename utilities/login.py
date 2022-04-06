@@ -21,7 +21,7 @@ def account():
     try:
         from accounts import passwords
     except ImportError:
-        print('No account info found.')
+        print('No account info found in ~/.local/lib/python3.9/site-packages/accounts/')
         DEXCOM_USERNAME, DEXCOM_PASSWORD = prompt()
     else:
         # ASK TO LOGIN AS USER
