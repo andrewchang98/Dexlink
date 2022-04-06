@@ -1,0 +1,5 @@
+# Password Files
+*.key
+
+# No Push/Pull Files
+*.npp
