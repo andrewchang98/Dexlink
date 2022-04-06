@@ -41,7 +41,7 @@ def account():
             sys.exit(0)
     # CONNECT TO DEXCOM SHARE API
     try:
-        print('\n', 'Connecting to Dexcom servers...', '\n', sep='')
+        print('\n', 'Connecting to Dexcom servers...', sep='')
         dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
     except:
         print('\n', 'Login failed. Please check username and password.', sep='')
