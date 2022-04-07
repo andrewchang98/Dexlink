@@ -2,7 +2,7 @@ import sys
 from getpass import getpass
 from pydexcom import Dexcom
 
-# PROMPT USER INFO
+# ACCOUNT SUBROUTINE TO PROMPT USER INFO
 def prompt():
     print('Log into Dexcom:')
     try:
@@ -14,7 +14,7 @@ def prompt():
     else:
         return username, password
 
-# LOAD ACCOUNT INFO
+# MAIN ROUTINE TO LOAD ACCOUNT INFO
 def account():
     # TRY TO LOAD PASSWORDS FILE
     print('Loading account info...')
