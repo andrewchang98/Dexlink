@@ -13,8 +13,6 @@ class UIPrinter:
         for char in string:
             stdout.write(char)
             stdout.flush()
-            if char == ' ':
-                sleep(0.1)
             sleep(0.1)
         stdout.write(end)
         stdout.flush()
