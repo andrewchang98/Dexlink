@@ -10,9 +10,8 @@ class UIPrinter:
     def printer(self, line='\n'):
         if not self.disabled:
             for char in line:
-                sys.stdout.write(char)
-                sys.stdout.flush()
-                print(char, end='')
+                stdout.write(char)
+                stdout.flush()
                 seconds = uniform(0.1, 0.2)
                 sleep(seconds)
         else:
