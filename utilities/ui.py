@@ -13,7 +13,7 @@ class UIPrinter:
         for char in string:
             stdout.write(char)
             stdout.flush()
-            sleep(0.1)
+            sleep(0.05)
         stdout.write(end)
         stdout.flush()
 
