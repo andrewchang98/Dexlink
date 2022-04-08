@@ -21,10 +21,10 @@ def account():
             elif keystroke == 'n' or keystroke == 'N':
                 DEXCOM_USERNAME, DEXCOM_PASSWORD = prompt()
             else:
-                print('\n', 'CANCELLED by user. Exiting now.', sep='')
+                print('\n', 'Cancelled by user. Exiting now.', sep='')
                 sys.exit(0)
         except KeyboardInterrupt:
-            print('\n', 'CANCELLED by user. Exiting now.', sep='')
+            print('\n', 'Cancelled by user. Exiting now.', sep='')
             sys.exit(0)
     # CONNECT TO DEXCOM SHARE API
     try:
