@@ -1,24 +1,27 @@
 from sys import stdout
 from time import sleep
-from random import uniform
 
 # PER CHARACTER SINGLE LINE PRINT UI FUNCTION
 class UIPrinter:
     def __init__(self, disabled=False):
         self.disabled = disabled
 
-    def printer(self, line='\n'):
-        if not self.disabled:
-            for char in line:
-                stdout.write(char)
-                stdout.flush()
-                seconds = uniform(0.1, 0.2)
-                sleep(seconds)
-        else:
-            print(line)
+    def printer(self, string, end='\n'):
+        if self.disabled:
+            print(string, end=end)
+            return
+        for char in string:
+            stdout.write(char)
+            stdout.flush()
+            if char == ' ':
+                sleep(0.1)
+            sleep(0.1)
+        stdout.write(end)
+        stdout.flush()
 
-    def disable_slow_prints(self, disabled=True):
+    # ENABLED OR DISABLED SLOW PRINTS
+    def enable_slow_prints(self):
         self.disabled = disabled
 
-    def enable_slow_prints(self, disabled=False):
+    def disable_slow_prints(self):
         self.disabled = disabled
