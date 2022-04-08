@@ -1,19 +1,5 @@
 import sys
-from getpass import getpass
 from pydexcom import Dexcom
-
-
-# ACCOUNT SUBROUTINE TO PROMPT USER INFO
-def prompt():
-    print('Log into Dexcom:')
-    try:
-        username = input('Username: ')
-        password = getpass('Password: ')
-    except KeyboardInterrupt:
-        print('\n', 'CANCELLED by user. Exiting now.', sep='')
-        sys.exit(0)
-    else:
-        return username, password
 
 # MAIN ROUTINE TO LOAD ACCOUNT INFO
 def account():
