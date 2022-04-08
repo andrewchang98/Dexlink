@@ -2,7 +2,7 @@ from sys import stdout
 from time import sleep
 
 # PER CHARACTER SINGLE LINE PRINT UI FUNCTION
-class UIPrinter:
+class Printer:
     def __init__(self, disabled=False):
         self.disabled = disabled
 
@@ -19,7 +19,7 @@ class UIPrinter:
 
     # ENABLED OR DISABLED SLOW PRINTS
     def enable_slow_prints(self):
-        self.disabled = disabled
+        self.disabled = False
 
     def disable_slow_prints(self):
-        self.disabled = disabled
+        self.disabled = True
