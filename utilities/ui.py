@@ -1,25 +1,32 @@
 from sys import stdout
 from time import sleep
 
-# PER CHARACTER SINGLE LINE PRINT UI FUNCTION
+# CHARACTER BY CHARACTER PRINT FUNCTION
 class Printer:
-    def __init__(self, disabled=False):
+    def __init__(self, delay=0.05, disabled=False):
         self.disabled = disabled
+        self.delay = delay
 
+    # MAIN FUNCTION
     def printer(self, string, end='\n'):
         if self.disabled:
             print(string, end=end)
-            return
-        for char in string:
-            stdout.write(char)
+        else:
+            for char in string:
+                stdout.write(char)
+                stdout.flush()
+                sleep(delay)
+            stdout.write(end)
             stdout.flush()
-            sleep(0.05)
-        stdout.write(end)
-        stdout.flush()
 
-    # ENABLED OR DISABLED SLOW PRINTS
-    def enable_slow_prints(self):
+    # ENABLE SLOW PRINTS
+    def enable_printer(self):
         self.disabled = False
 
-    def disable_slow_prints(self):
+    # USE REGULAR PRINTS
+    def disable_printer(self):
         self.disabled = True
+
+    # CHANGE DELAY
+    def change_delay(self, delay):
+        self.delay = delay
