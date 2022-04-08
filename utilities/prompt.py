@@ -3,9 +3,9 @@ from getpass import getpass
 from slowprinter import Printer
 
 # ACCOUNT SUBROUTINE TO PROMPT USER INFO
-def prompt(msg='Log into Dexcom:'):
+def prompt():
     ui = Printer(0.05)
-    ui.printer(msg)
+    ui.printer('Log into Dexcom:')
     try:
         ui.printer('Username:', end=' ')
         username = input()
