@@ -1,4 +1,4 @@
-from dexcomutilties import login
+from dexutils import login
 from time import time
 
 dexcom = login.account()
