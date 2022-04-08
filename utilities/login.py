@@ -2,6 +2,7 @@ import sys
 from getpass import getpass
 from pydexcom import Dexcom
 
+
 # ACCOUNT SUBROUTINE TO PROMPT USER INFO
 def prompt():
     print('Log into Dexcom:')
@@ -25,7 +26,7 @@ def account():
         DEXCOM_USERNAME, DEXCOM_PASSWORD = prompt()
     else:
         # ASK TO LOGIN AS USER
-        print('Login as {} (y/n)?'.format(passwords.account[0]), end = ' ')
+        print('Login as {} (Y/n)?'.format(passwords.account[0]), end = ' ')
         try:
             keystroke = input()
             if keystroke == 'y' or keystroke == 'Y':
