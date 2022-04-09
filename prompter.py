@@ -12,7 +12,6 @@ def prompter(printer=None):
     try:
         printer('Username:', end=' ')
         username = input()
-        printer('Password:', end=' ')
         password = getpass()
     except KeyboardInterrupt:
         print('\nCancelled by user. Exiting now.')
