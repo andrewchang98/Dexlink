@@ -6,7 +6,7 @@ from slowprinter import Printer
 # MAIN ROUTINE TO LOAD ACCOUNT INFO
 def login():
     # TRY TO LOAD PASSWORDS FILE
-    ui = Printer(0.05)
+    ui = Printer(0.1)
     ui.printer('Loading account info...')
     try:
         from accounts import passwords
