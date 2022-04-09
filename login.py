@@ -24,19 +24,19 @@ def login():
             elif keystroke == 'n' or keystroke == 'N':
                 DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
             else:
-                ui.printer('\n', 'Cancelled by user. Exiting now.', sep='')
+                ui.printer('\nCancelled by user. Exiting now.')
                 sys.exit(0)
         except KeyboardInterrupt:
-            ui.printer('\n', 'Cancelled by user. Exiting now.', sep='')
+            ui.printer('\nCancelled by user. Exiting now.')
             sys.exit(0)
     # CONNECT TO DEXCOM SHARE API
     try:
-        ui.printer('\n', 'Connecting to Dexcom servers...', sep='')
+        ui.printer('\nConnecting to Dexcom servers...')
         dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
     except:
-        ui.printer('\n', 'Login failed. Please check username and password.', sep='')
+        ui.printer('\nLogin failed. Please check username and password.')
         ui.printer('Exiting now.')
         sys.exit(0)
     else:
-        ui.printer('Logged in as {}'.format(DEXCOM_USERNAME), '\n', sep='')
+        ui.printer('Logged in as {}\n'.format(DEXCOM_USERNAME))
         return dexcom
