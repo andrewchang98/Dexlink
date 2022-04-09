@@ -9,7 +9,7 @@ def login():
     ui = Printer(0.1)
     ui.printer('Loading account info...')
     try:
-        from accounts import passwords
+        import passwords
     except ImportError:
         ui.printer('No account info found in ~/.local/lib/python3.9/site-packages/accounts/')
         DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
