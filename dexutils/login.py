@@ -1,10 +1,10 @@
 import sys
-from prompt import prompt
+from prompter import prompter
 from pydexcom import Dexcom
 from slowprinter import Printer
 
 # MAIN ROUTINE TO LOAD ACCOUNT INFO
-def account():
+def login():
     # TRY TO LOAD PASSWORDS FILE
     ui = Printer(0.05)
     ui.printer('Loading account info...')
@@ -12,7 +12,7 @@ def account():
         from accounts import passwords
     except ImportError:
         ui.printer('No account info found in ~/.local/lib/python3.9/site-packages/accounts/')
-        DEXCOM_USERNAME, DEXCOM_PASSWORD = prompt()
+        DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
     else:
         # ASK TO LOGIN AS USER
         ui.printer('Login as {} (Y/n)?'.format(passwords.account[0]), end = ' ')
@@ -22,7 +22,7 @@ def account():
                 DEXCOM_USERNAME = passwords.account[0]
                 DEXCOM_PASSWORD = passwords.account[1]
             elif keystroke == 'n' or keystroke == 'N':
-                DEXCOM_USERNAME, DEXCOM_PASSWORD = prompt()
+                DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
             else:
                 ui.printer('\n', 'Cancelled by user. Exiting now.', sep='')
                 sys.exit(0)

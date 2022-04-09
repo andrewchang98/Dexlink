@@ -3,16 +3,19 @@ from getpass import getpass
 from slowprinter import Printer
 
 # ACCOUNT SUBROUTINE TO PROMPT USER INFO
-def prompt():
-    ui = Printer(0.05)
-    ui.printer('Log into Dexcom:')
+def prompter(printer=None):
+    if printer is None:
+        printer = print
+    else:
+        printer = printer
+    printer('Log into Dexcom:')
     try:
-        ui.printer('Username:', end=' ')
+        printer('Username:', end=' ')
         username = input()
-        ui.printer('Password:', end=' ')
+        printer('Password:', end=' ')
         password = getpass()
     except KeyboardInterrupt:
-        print('\n', 'Cancelled by user. Exiting now.', sep='')
+        printer('\n', 'Cancelled by user. Exiting now.', sep='')
         sys.exit(0)
     else:
         return username, password
