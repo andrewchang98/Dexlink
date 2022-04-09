@@ -1,4 +1,4 @@
-fimport login
+from login import login
 from time import time
 
 dexcom = login()
