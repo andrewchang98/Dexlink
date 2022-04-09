@@ -15,7 +15,7 @@ class Printer:
             for char in string:
                 stdout.write(char)
                 stdout.flush()
-                sleep(delay)
+                sleep(self.delay)
             stdout.write(end)
             stdout.flush()
 
