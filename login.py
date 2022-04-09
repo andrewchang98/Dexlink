@@ -6,7 +6,7 @@ from slowprinter import Printer
 # MAIN ROUTINE TO LOAD ACCOUNT INFO
 def login():
     # TRY TO LOAD PASSWORDS FILE
-    ui = Printer(0.05)
+    ui = Printer(delay=0.05)
     ui.printer('Loading account info...')
     try:
         import passwords
@@ -15,7 +15,7 @@ def login():
         DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
     else:
         # ASK TO LOGIN AS USER
-        ui.printer('Login as {} (Y/n)?'.format(passwords.account[0]), end = ' ')
+        ui.printer('Login as {} (Y/n)?'.format(passwords.account[0]), end=' ')
         try:
             keystroke = input()
             if keystroke == 'y' or keystroke == 'Y':
