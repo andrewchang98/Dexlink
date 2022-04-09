@@ -1,8 +1,7 @@
 from dexutils import login
 from time import time
 
-dexcom = login.account()
-
+dexcom = login()
 
 last_reading = 0
 while True:
