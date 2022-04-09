@@ -6,12 +6,12 @@ from slowprinter import Printer
 # MAIN ROUTINE TO LOAD ACCOUNT INFO
 def login():
     # TRY TO LOAD PASSWORDS FILE
-    ui = Printer(0.1)
+    ui = Printer(0.05)
     ui.printer('Loading account info...')
     try:
         import passwords
     except ImportError:
-        ui.printer('No account info found in ~/.local/lib/python3.9/site-packages/accounts/')
+        ui.printer('No account info found in ~/Dexlink/')
         DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
     else:
         # ASK TO LOGIN AS USER

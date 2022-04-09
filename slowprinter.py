@@ -1,4 +1,4 @@
-from sys import stdout
+from sys import stdout, exit
 from time import sleep
 
 # CHARACTER BY CHARACTER PRINT FUNCTION
@@ -9,15 +9,21 @@ class Printer:
 
     # MAIN FUNCTION
     def printer(self, string, end='\n'):
-        if self.disabled:
-            print(string, end=end)
-        else:
-            for char in string:
-                stdout.write(char)
-                stdout.flush()
-                sleep(self.delay)
-            stdout.write(end)
-            stdout.flush()
+        try:
+            if self.disabled:
+                print(string, end=end)
+            else:
+                for char in string:
+                    stdout.write(char)
+                    stdout.flush()
+                    sleep(self.delay)
+                if end is not None:
+                    stdout.write(end)
+                    stdout.flush()
+        except KeyboardInterrupt:
+            print('\nCancelled by user. Exiting now.')
+            exit(0)
+
 
     # ENABLE SLOW PRINTS
     def enable_printer(self):
