@@ -12,7 +12,7 @@ def prompter(printer=None, message='Log into Dexcom:'):
     try:
         printer('\nUsername:', end=' ')
         username = input()
-        printer('\nPassword:', end=' ')
+        printer('Password:', end=' ')
         password = getpass(prompt='')
     except KeyboardInterrupt:
         print('\nCancelled by user. Exiting now.')
