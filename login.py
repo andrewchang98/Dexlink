@@ -15,12 +15,12 @@ def login():
         DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
     else:
         # ASK TO LOGIN AS USER
-        ui.printer('Login as {} (Y/n)?'.format(passwords.account[0]), end=' ')
+        ui.printer('Login as {} (Y/n)?'.format(passwords.dexcom['api_key']), end=' ')
         try:
             keystroke = input()
             if keystroke == 'y' or keystroke == 'Y':
-                DEXCOM_USERNAME = passwords.account[0]
-                DEXCOM_PASSWORD = passwords.account[1]
+                DEXCOM_USERNAME = passwords.dexcom['api_key']
+                DEXCOM_PASSWORD = passwords.dexcom['auth_token']
             elif keystroke == 'n' or keystroke == 'N':
                 DEXCOM_USERNAME, DEXCOM_PASSWORD = prompter(ui.printer)
             else:
