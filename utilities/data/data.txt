@@ -1,0 +1,3 @@
+BG history data is stored in this folder.
+BG history is a list of tuples with a leading date string:
+bg_history = [date_string, (nth_bg_value, nth_time_string), ... ]
