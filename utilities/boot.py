@@ -1,7 +1,7 @@
 """
-Boot file contains boot() function to start an Alpaca + Twilio session.
+Boot file contains boot() function to start an Dexcom + Twilio session.
 Provides abstraction barrier for logging in.
-Looks for 'alpaca.key' and 'twilio.key' Pickle files.
+Looks for 'dexcom.key' and 'twilio.key' Pickle files.
 Prompts manual user for service if respective .key file is not found.
 
 !!! NEVER SHARE YOUR *.key FILES !!!
@@ -22,8 +22,9 @@ from datetime import datetime
 from requests.exceptions import HTTPError
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioException, TwilioRestException
-from alpaca_trade_api import REST
-from alpaca_trade_api.stream import Stream
+from pydexcom import Dexcom
+from pydexcom.errors import DexcomError, AccountError, \
+                            SessionError, ArguementError
 from utilities.Printer import Printer
 from utilities.Texter import Texter
 
@@ -43,12 +44,12 @@ def load_key_dict(file_name: str) -> dict:
     key_dict = pickle.load(file)
     return key_dict
 
-# Ask for Alpaca Credentials in the CLI
-def alpaca_prompter(printer=print) -> tuple:
-    printer("Log into Alpaca:")
-    printer("API Key ID:", end=' ')
+# Ask for Dexcom Credentials in the CLI
+def dexcom_prompter(printer=print) -> tuple:
+    printer("Log into Dexcom:")
+    printer("Username:", end=' ')
     acc_key = input()
-    printer("Secret Key:", end=' ')
+    printer("Password:", end=' ')
     auth_key = getpass(prompt='')
     return acc_key, auth_key
 
@@ -105,76 +106,64 @@ def input_confirmation() -> bool:
     else:
         return input_confirmation()
 
-# The Alpaca + Twilio boot Function that does it all
-def boot(APCA_API_BASE_URL="https://paper-api.alpaca.markets",
-          data_feed='sip',
-          enable_printer=False,
-          char_per_sec=50,
-          max_attempts=3) -> tuple:
+# The Dexcom + Twilio boot Function that does it all
+def boot(enable_printer=False,
+         char_per_sec=50,
+         max_attempts=3) -> tuple:
     # Main Try clause
     try:
         # Instantiate char by char printer
         slow = Printer(char_per_sec, enable_printer)
-        # Load Alpaca keys
+        # Load Dexcom keys
         try:
-            alpaca_key_dict = load_key_dict('alpaca.key')
-            APCA_API_KEY_ID = alpaca_key_dict['acc_key']
-            APCA_API_SECRET_KEY = alpaca_key_dict['auth_key']
-        # Asks for new Alpaca keys if Alpaca keys could not be loaded
+            dexcom_key_dict = load_key_dict('dexcom.key')
+            APCA_API_KEY_ID = dexcom_key_dict['acc_key']
+            APCA_API_SECRET_KEY = dexcom_key_dict['auth_key']
+        # Asks for new Dexcom keys if Dexcom keys could not be loaded
         except (FileNotFoundError, AttributeError, ImportError,
                 KeyError) as error:
-            slow.printer("\nError loading Alpaca keys from",
-                         "~/Peppaboot/peppaboot/utilities/keys:")
+            slow.printer("\nError loading Dexcom keys from",
+                         "~/Dexlink/dexlink/utilities/keys:")
             slow.printer(str(error))
-            from_alpaca_save = False
+            from_dexcom_save = False
             APCA_API_KEY_ID, \
-            APCA_API_SECRET_KEY = alpaca_prompter(slow.printer)
+            APCA_API_SECRET_KEY = dexcom_prompter(slow.printer)
         else:
-            slow.printer("Loaded Alpaca account:", APCA_API_KEY_ID)
-            from_alpaca_save = True
+            slow.printer("Loaded Dexcom account:", APCA_API_KEY_ID)
+            from_dexcom_save = True
             # Asks for new keys if User declines loaded keys
             slow.printer("Continue with loaded account (y/n)?", end=' ')
             if not input_confirmation():
-                from_alpaca_save = False
+                from_dexcom_save = False
                 APCA_API_KEY_ID, \
-                APCA_API_SECRET_KEY = alpaca_prompter(slow.printer)
-                # Compile/recompile Alpaca key dictionary
-                alpaca_key_dict = {
+                APCA_API_SECRET_KEY = dexcom_prompter(slow.printer)
+                # Compile/recompile Dexcom key dictionary
+                dexcom_key_dict = {
                                    'acc_key' : APCA_API_KEY_ID,
                                    'auth_key': APCA_API_SECRET_KEY
                                   }
-        # Ask for new Alpaca keys while verify_key_dict returns False
-        while verify_key_dict(alpaca_key_dict) is False:
-            slow.printer("\nAlpaca keys corrupted!. Re-enter keys.")
+        # Ask for new Dexcom keys while verify_key_dict returns False
+        while verify_key_dict(dexcom_key_dict) is False:
+            slow.printer("\nDexcom keys corrupted!. Re-enter keys.")
             slow.printer("Keep access to key files restricted!")
-            from_alpaca_save = False
+            from_dexcom_save = False
             APCA_API_KEY_ID, \
-            APCA_API_SECRET_KEY = alpaca_prompter(slow.printer)
-            alpaca_key_dict = {
+            APCA_API_SECRET_KEY = dexcom_prompter(slow.printer)
+            dexcom_key_dict = {
                                'acc_key' : APCA_API_KEY_ID,
                                'auth_key': APCA_API_SECRET_KEY
                               }
-        # Connect to Alpaca and get status
+        # Connect to Dexcom
         try:
-            # Instantiate Alpaca REST and Stream
-            slow.printer("Connecting to Alpaca...")
-            alpaca = REST(
-                          APCA_API_KEY_ID,
-                          APCA_API_SECRET_KEY,
-                          APCA_API_BASE_URL
-                         )
-            stream = Stream(
-                            APCA_API_KEY_ID,
-                            APCA_API_SECRET_KEY,
-                            APCA_API_BASE_URL,
-                            data_feed=data_feed
-                           )
-            account = alpaca.get_account()
+            # Instantiate Dexcom
+            slow.printer("Connecting to Dexcom...")
+            dexcom = Dexcom(DEXCOM_USERNAME, DEXCOM_PASSWORD)
+            account = dexcom.get_account()
             slow.printer(f"Logged in as: {APCA_API_KEY_ID}")
             slow.printer(f"Your account status: {account.status}")
         # Recurse boot if authentication fails
-        except (HTTPError, ValueError) as error:
-            slow.printer("Error occurred during Alpaca login:")
+        except DexcomError as error:
+            slow.printer("Error occurred during Dexcom login:")
             slow.printer(str(error))
             # Recurse boot with one less attempt
             max_attempts -= 1
@@ -187,21 +176,21 @@ def boot(APCA_API_BASE_URL="https://paper-api.alpaca.markets",
                          enable_printer,
                          char_per_sec,
                          max_attempts)
-        # Save Alpaca keys if successful
+        # Save Dexcom keys if successful
         try:
-            if not from_alpaca_save:
-                # Ask to save new Alpaca keys and replace old Alpaca keys
-                slow.printer("Remember Alpaca login? (y/n)?", end=' ')
+            if not from_dexcom_save:
+                # Ask to save new Dexcom keys and replace old Dexcom keys
+                slow.printer("Remember Dexcom login? (y/n)?", end=' ')
                 if input_confirmation():
-                    # Pickle Alpaca key dictionary
-                    save_key_dict('alpaca.key', alpaca_key_dict)
-                    slow.printer("Alpaca keys saved.")
+                    # Pickle Dexcom key dictionary
+                    save_key_dict('dexcom.key', dexcom_key_dict)
+                    slow.printer("Dexcom keys saved.")
                 else:
-                    slow.printer("Alpaca keys not saved.")
+                    slow.printer("Dexcom keys not saved.")
         # Print error but do not exit script if exception is raised
         except (FileNotFoundError, AttributeError, ImportError,
                 KeyError) as error:
-                slow.printer("Alpaca keys not saved due to Error:")
+                slow.printer("Dexcom keys not saved due to Error:")
                 slow.printer(str(error))
         # Load Twilio keys
         try:
@@ -261,15 +250,14 @@ def boot(APCA_API_BASE_URL="https://paper-api.alpaca.markets",
                             TWLO_TARGET_NUM
                            )
             twilio.text(
-                        f"Pepper booted on: {socket.gethostname()}",
-                        f"Account status: {account.status}",
+                        f"Logged in to Dexcom on: {socket.gethostname()}",
                         f"Timestamp: {get_timestr()}",
                         sep = '\n'
                        )
             slow.printer(f"Logged in as: {TWLO_SID_KEY}")
             slow.printer(f"Alert sent to: {TWLO_TARGET_NUM}")
         # Recurse boot if authentication or texter fails
-        except (TwilioException, TwilioRestException, ValueError) as error:
+        except (TwilioException, TwilioRestException ValueError) as error:
             slow.printer("Error occurred during Twilio login:")
             slow.printer(str(error))
             # Recurse boot with one less attempt
@@ -306,4 +294,4 @@ def boot(APCA_API_BASE_URL="https://paper-api.alpaca.markets",
     # Return tuple of necessary objects
     else:
         slow.printer(f"\nBoot completed successfully @ {get_timestr()}\n")
-        return alpaca, stream, twilio
+        return dexcom, twilio
