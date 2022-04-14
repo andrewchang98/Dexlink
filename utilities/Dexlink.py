@@ -5,7 +5,7 @@ Provides an abstraction layer above the Alpaca API
 from utilities.Printer import Printer
 from utilities.boot import boot, get_datetime
 
-class Pepper:
+class Dexlink:
     def __init__(
                  self,
                  symbols: set,
